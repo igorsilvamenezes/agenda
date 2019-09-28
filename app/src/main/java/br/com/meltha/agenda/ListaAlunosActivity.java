@@ -11,6 +11,9 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import br.com.meltha.agenda.dao.AlunoDao;
+import br.com.meltha.agenda.modelo.Aluno;
+
 public class ListaAlunosActivity extends AppCompatActivity {
 
     @Override
@@ -18,13 +21,12 @@ public class ListaAlunosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_alunos);
 
-        //conexao
-        //faz busca no banco de dado e traz os alunos
-        //popular o array de string
+        AlunoDao dao = new AlunoDao(this);
+        List<Aluno> alunos = dao.buscaAlunos();
+        dao.close();
 
-        String[] alunos =  {"Igor", "Sandra", "Melyssa", "Maryana"};
         ListView listaAlunos = findViewById(R.id.lista_alunos);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos);
+        ArrayAdapter<Aluno> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos);
         listaAlunos.setAdapter(adapter);
 
         Button novoAluno = findViewById(R.id.novo_aluno);

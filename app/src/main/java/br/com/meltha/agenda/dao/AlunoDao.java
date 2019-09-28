@@ -2,10 +2,14 @@ package br.com.meltha.agenda.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.meltha.agenda.modelo.Aluno;
 
@@ -52,5 +56,27 @@ public class AlunoDao extends SQLiteOpenHelper {
         dados.put("nota", aluno.getNota());
 
         db.insert(TABLE_NAME, null, dados);
+    }
+
+    public List<Aluno> buscaAlunos() {
+        String sql = "SELECT * FROM " + TABLE_NAME + ";";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(sql, null);
+
+        List<Aluno> alunos = new ArrayList<>();
+        while(c.moveToNext()){
+            Aluno aluno = new Aluno();
+            aluno.setId(c.getLong(c.getColumnIndex("id")));
+            aluno.setNome(c.getString(c.getColumnIndex("nome")));
+            aluno.setEndereco(c.getString(c.getColumnIndex("endereco")));
+            aluno.setTelefone(c.getString(c.getColumnIndex("telefone")));
+            aluno.setSite(c.getString(c.getColumnIndex("site")));
+            aluno.setNota(c.getDouble(c.getColumnIndex("nota")));
+
+            alunos.add(aluno);
+        }
+        c.close();
+
+        return alunos;
     }
 }

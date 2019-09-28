@@ -1,5 +1,7 @@
 package br.com.meltha.agenda.modelo;
 
+import androidx.annotation.NonNull;
+
 public class Aluno {
 
     private Long id;
@@ -55,5 +57,11 @@ public class Aluno {
 
     public void setNota(Double nota) {
         this.nota = nota;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getId() + " - " + getNome();
     }
 }
