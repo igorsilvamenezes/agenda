@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import br.com.meltha.agenda.dao.AlunoDao;
 import br.com.meltha.agenda.modelo.Aluno;
 
 public class FormularioActivity extends AppCompatActivity {
@@ -41,7 +42,11 @@ public class FormularioActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.menu_formulario_ok:
                 Aluno aluno = helper.pegaAluno();
-                Toast.makeText(FormularioActivity.this, "Aluno " + aluno.getNome() + " Salvo", Toast.LENGTH_SHORT).show();
+                AlunoDao dao = new AlunoDao(this);
+                dao.insere(aluno);
+                dao.close();
+
+                Toast.makeText(FormularioActivity.this, "Aluno " + aluno.getNome() + " salvo", Toast.LENGTH_SHORT).show();
 
                 finish();
                 break;
