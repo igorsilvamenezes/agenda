@@ -2,7 +2,9 @@ package br.com.meltha.agenda.modelo;
 
 import androidx.annotation.NonNull;
 
-public class Aluno {
+import java.io.Serializable;
+
+public class Aluno implements Serializable {
 
     private Long id;
     private String nome;

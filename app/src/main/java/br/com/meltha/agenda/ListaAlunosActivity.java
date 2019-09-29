@@ -29,6 +29,18 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         listaAlunos = findViewById(R.id.lista_alunos);
 
+        listaAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> lista, View item, int position, long id) {
+                Aluno aluno = (Aluno) listaAlunos.getItemAtPosition(position);
+                Toast.makeText(ListaAlunosActivity.this, "Editando o aluno " + aluno.getNome(), Toast.LENGTH_SHORT).show();
+
+                Intent intentVaiProFormulario = new Intent(ListaAlunosActivity.this, FormularioActivity.class);
+                intentVaiProFormulario.putExtra("aluno", aluno);
+                startActivity(intentVaiProFormulario);
+            }
+        });
+
         Button novoAluno = findViewById(R.id.novo_aluno);
         novoAluno.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,15 +58,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
         super.onResume();
 
         carregaLista();
-    }
-
-    private void carregaLista() {
-        AlunoDao dao = new AlunoDao(this);
-        List<Aluno> alunos = dao.buscaAlunos();
-        dao.close();
-
-        ArrayAdapter<Aluno> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos);
-        listaAlunos.setAdapter(adapter);
     }
 
     @Override
@@ -76,5 +79,14 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void carregaLista() {
+        AlunoDao dao = new AlunoDao(this);
+        List<Aluno> alunos = dao.buscaAlunos();
+        dao.close();
+
+        ArrayAdapter<Aluno> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos);
+        listaAlunos.setAdapter(adapter);
     }
 }
