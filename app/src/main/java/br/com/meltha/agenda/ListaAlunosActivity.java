@@ -66,6 +66,13 @@ public class ListaAlunosActivity extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         final Aluno aluno = (Aluno) listaAlunos.getItemAtPosition(info.position);
 
+        //Item do Menu para enviar um SMS para o aluno
+        MenuItem itemSms = menu.add("Enviar SMS");
+        Intent intentSms = new Intent(Intent.ACTION_VIEW);
+        intentSms.setData(Uri.parse("sms:" + aluno.getTelefone()));
+        itemSms.setIntent(intentSms);
+
+        //Item do Menu para Visualizar o site do aluno
         MenuItem itemSite = menu.add("Visitar Site");
         Intent intentSite = new Intent(Intent.ACTION_VIEW);
 
@@ -77,6 +84,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         intentSite.setData(Uri.parse(site));
         itemSite.setIntent(intentSite);
 
+        //Item do Menu para Deletar um Aluno
         MenuItem deletar = menu.add("Deletar");
         deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
