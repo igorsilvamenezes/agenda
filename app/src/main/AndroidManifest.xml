@@ -3,6 +3,9 @@
     package="br.com.meltha.agenda">
 
     <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
 
     <application
         android:allowBackup="true"
@@ -12,6 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="br.com.meltha.agenda.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
+
         <activity android:name=".FormularioActivity"></activity>
 
         <activity android:name=".ListaAlunosActivity">
@@ -20,6 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

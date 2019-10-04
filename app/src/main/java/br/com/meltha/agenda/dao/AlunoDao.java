@@ -16,7 +16,7 @@ import br.com.meltha.agenda.modelo.Aluno;
 public class AlunoDao extends SQLiteOpenHelper {
 
     private final static String DATABASE_NAME = "agenda.db";
-    private final static int DATABASE_VERSION = 1;
+    private final static int DATABASE_VERSION = 2;
     private final static String TABLE_NAME = "Alunos";
 
 
@@ -32,7 +32,8 @@ public class AlunoDao extends SQLiteOpenHelper {
                 "endereco TEXT, " +
                 "telefone TEXT, " +
                 "site TEXT, " +
-                "nota REAL);";
+                "nota REAL," +
+                "caminhoFoto TEXT);";
 
         db.execSQL(sql);
 
@@ -40,9 +41,13 @@ public class AlunoDao extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String sql = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
-        db.execSQL(sql);
-        onCreate(db);
+        String sql = "";
+
+        switch(oldVersion){
+            case 1:
+                sql = "ALTER TABLE " + TABLE_NAME + " ADD COLUMN caminhoFoto TEXT;";
+                db.execSQL(sql);
+        }
     }
 
     public void insere(Aluno aluno) {
@@ -60,6 +65,7 @@ public class AlunoDao extends SQLiteOpenHelper {
         dados.put("telefone", aluno.getTelefone());
         dados.put("site", aluno.getSite());
         dados.put("nota", aluno.getNota());
+        dados.put("caminhoFoto", aluno.getCaminhoFoto());
         return dados;
     }
 
@@ -77,6 +83,7 @@ public class AlunoDao extends SQLiteOpenHelper {
             aluno.setTelefone(c.getString(c.getColumnIndex("telefone")));
             aluno.setSite(c.getString(c.getColumnIndex("site")));
             aluno.setNota(c.getDouble(c.getColumnIndex("nota")));
+            aluno.setCaminhoFoto(c.getString(c.getColumnIndex("caminhoFoto")));
 
             alunos.add(aluno);
         }
