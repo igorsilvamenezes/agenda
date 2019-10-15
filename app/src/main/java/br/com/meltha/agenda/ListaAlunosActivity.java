@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import br.com.meltha.agenda.adapter.AlunosAdapter;
 import br.com.meltha.agenda.dao.AlunoDao;
 import br.com.meltha.agenda.modelo.Aluno;
 
@@ -135,7 +136,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         List<Aluno> alunos = dao.buscaAlunos();
         dao.close();
 
-        ArrayAdapter<Aluno> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos);
+        AlunosAdapter adapter = new AlunosAdapter(this, alunos);
         listaAlunos.setAdapter(adapter);
     }
 
